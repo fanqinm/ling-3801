@@ -1,16 +1,17 @@
-Appendix: Python Code for Frequency Analysis
-#!/usr/bin/env python
 
+#!/usr/bin/env python
 # For importing required modules.
+
 import argparse
 import sys
 from collections import Counter
 from pathlib import Path
 
+
 # Introducing the main function.
 def main():
     # Read the input filename and the number of results to display.
-    # Set the default is 20 results per length for our convenience. ‘--top 0’ displays all results.
+    # Set the default is 20 results per length for our convenience. '--top 0' displays all results.
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('file', nargs='?', help='UTF-8 input file; omit to read standard input')
     parser.add_argument('--top', type=int, default=20, help='results per length (default: 20; 0: all)')
@@ -31,14 +32,17 @@ def main():
         # Count overlapping digit sequences and sort them by frequency.
         counts = Counter(digits[i:i+n] for i in range(windows))
         ranked = sorted(counts.items(), key=lambda item: (-item[1], item[0]))
+
         if args.top:
             ranked = ranked[:args.top]
 
         # Display the most frequent sequences with their counts and percentages.
         print(f'Total windows: {windows}; distinct combinations: {len(counts)}')
         print(f'{"Combination":<{max(n, 12)}} {"Count":>8} {"Percent":>10}')
+
         for combination, count in ranked:
             print(f'{combination:<{max(n, 12)}} {count:>8} {count / windows * 100:>9.3f}%')
+
 
 # Run main() anyway.
 main()
